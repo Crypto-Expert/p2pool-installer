@@ -29,20 +29,31 @@ Process.Start(Zope_Location & "zope.interface-3.8.0.win32-py2.7.exe")
 Dim WMI_Location as String = "C:\WMI"
 My.Computer.Network.DownloadFile("https://pypi.python.org/packages/source/W/WMI/WMI-1.4.9.zip", WMI_Location)
 ZipFile.ExtractToDirectory(WMI_Location & "WMI-1.4.9.zip)
-Process.Start(WMI_Location & "WMI-1.4.9.zip)
+Process.Start(WMI_Location & "WMI-1.4.9.exe)
 
 ' GCC
 Dim GCC_Location as String = "C:\GCC"
 My.Computer.DownloadFile("https://github.com/develersrl/gccwinbinaries/releases/download/v1.1/gcc-mingw-4.3.3-setup.exe", GCC_Location)
 Process.Start(GCC_Location & "gcc-mingw-4.3.3-setup.exe")
-MessageBox.show("Please Select the Radio Button asking to link with MSVCR90.DLL")
+Console.WriteLine("Please Select the Radio Button asking to link with MSVCR90.DLL")
+
+' Bitcoin QT
+Dim Bitcoin_Location as String = "C:\Bitcoin"
+My.Computer.DownloadFile("https://bitcoin.org/bin/0.9.0/bitcoin-0.9.0-win32-setup.exe",Bitcoin_Location)
+Process.start(Bitcoin_Location & "bitcoin-0.9.0-win32-setup.exe")
 
 #End Region
 #Region "Setup"
 Process.Start(P2Pool_Location & "\litecoin_scrypt\setup.py build --compile=mingw install")
-In
-Run the following: setup.py build --compile=mingw32 install
-Go to %appdata%/dogecoin/ (for win7)
-Create a .conf file (create a text file and rename - make sure unknown file extensions are shown - http://support.microsoft.com/kb/865219) called 'dogecoin.conf'
-Edit dogecoin.conf to include:
+
+Dim objWriter As New System.IO.StreamWriter("%APPDATA%/bitcoin/bitcoin.conf")
+objWriter.write("rpcuser=username \n")
+objWriter.write("rpcpassword=password \n")
+objWriter.write("server=1 \n")
+objWriter.write("daemon=1 \n")
+objWriter.Close()
+
+Process.start(P2Pool_Location & "run_p2pool.py --net bitcoin")
+Console.Write("Bitcoin QT and P2Pool Should be Listening")
+
 
